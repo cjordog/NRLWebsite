@@ -17,8 +17,8 @@ var terminalContainer = document.getElementById('terminal-container'),
     rowsElement = document.getElementById('rows');
 
 function setTerminalSize () {
-  var cols = parseInt(colsElement.value, 10),
-      rows = parseInt(rowsElement.value, 10),
+  var cols = 86,
+      rows = 20,
       width = (cols * charWidth).toString() + 'px',
       height = (rows * charHeight).toString() + 'px';
 
@@ -27,21 +27,21 @@ function setTerminalSize () {
   term.resize(cols, rows);
 }
 
-colsElement.addEventListener('change', setTerminalSize);
-rowsElement.addEventListener('change', setTerminalSize);
+// colsElement.addEventListener('change', setTerminalSize);
+// rowsElement.addEventListener('change', setTerminalSize);
 
-optionElements.cursorBlink.addEventListener('change', function () {
-  term.setOption('cursorBlink', optionElements.cursorBlink.checked);
-});
-optionElements.cursorStyle.addEventListener('change', function () {
-  term.setOption('cursorStyle', optionElements.cursorStyle.value);
-});
-optionElements.scrollback.addEventListener('change', function () {
-  term.setOption('scrollback', parseInt(optionElements.scrollback.value, 10));
-});
-optionElements.tabstopwidth.addEventListener('change', function () {
-  term.setOption('tabStopWidth', parseInt(optionElements.tabstopwidth.value, 10));
-});
+// optionElements.cursorBlink.addEventListener('change', function () {
+//   term.setOption('cursorBlink', optionElements.cursorBlink.checked);
+// });
+// optionElements.cursorStyle.addEventListener('change', function () {
+//   term.setOption('cursorStyle', optionElements.cursorStyle.value);
+// });
+// optionElements.scrollback.addEventListener('change', function () {
+//   term.setOption('scrollback', parseInt(optionElements.scrollback.value, 10));
+// });
+// optionElements.tabstopwidth.addEventListener('change', function () {
+//   term.setOption('tabStopWidth', parseInt(optionElements.tabstopwidth.value, 10));
+// });
 
 createTerminal();
 
@@ -51,16 +51,16 @@ function createTerminal() {
     terminalContainer.removeChild(terminalContainer.children[0]);
   }
   term = new Terminal({
-    cursorBlink: optionElements.cursorBlink.checked,
-    scrollback: parseInt(optionElements.scrollback.value, 10),
-    tabStopWidth: parseInt(optionElements.tabstopwidth.value, 10)
+    cursorBlink: true,
+    scrollback: 1000,
+    tabStopWidth: 8
   });
   term.on('resize', function (size) {
     if (!pid) {
       return;
     }
-    var cols = size.cols,
-        rows = size.rows,
+    var cols = 86,
+        rows = 20,
         url = '/terminals/' + pid + '/size?cols=' + cols + '&rows=' + rows;
 
     fetch(url, {method: 'POST'});
@@ -75,8 +75,8 @@ function createTerminal() {
       cols = initialGeometry.cols,
       rows = initialGeometry.rows;
 
-  colsElement.value = cols;
-  rowsElement.value = rows;
+  // colsElement.value = cols;
+  // rowsElement.value = rows;
 
   fetch('/terminals?cols=' + cols + '&rows=' + rows, {method: 'POST'}).then(function (res) {
 

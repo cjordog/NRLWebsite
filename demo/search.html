@@ -1,0 +1,210 @@
+<!DOCTYPE  html>                                                                                                                               
+<html>
+    <head>
+        <title>Underwater Experiement NRL</title>
+        <link href="/bootstrap.css" type="text/css"          rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="/bootstrap.js"></script> 
+    </head>
+
+    <body>
+        <!-- NAvigation Panel --> 
+        <nav class="navbar navbar-default">
+             <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">UCLA NRL WaterCom Testbed</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li class="active"><a href="/search">Experiment<span class="sr-only">(current)</span></a></li>
+                        <li><a href="/register">Register</a></li> 
+                        <li><a href="/publications">Publications</a></li>
+                        <li><a href="/FAQ">FAQ</a></li> 
+                        <li><a href="/terminal">Terminal</a></li>   
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <h1>Sample Experiment Submission Form</h1>
+            <div class="well bs-component">
+                <form class="form-horizontal" enctype='multipart/form-data' method='post' action='submit.php'>
+                    <fieldset>
+                        <legend>Please enter the following</legend>
+                        <div class="form-group">
+                            <label for="max-power" class="col-sm-3 control-label">Maximum Power (dB)</label>
+                                <div class="col-sm-3"> 
+                                    <select class="form-control" name="mpwr">
+                                        <option>0</option>
+                                        <option>-5</option>
+                                        <option>-10</option>
+                                        <option>-15</option>
+                                        <option>-20</option>
+                                        <option>-25</option>
+                                        <option>-30</option>
+                                        <option>-35</option>
+                                        <option>-40</option>
+                                        <option>-45</option>
+                                        <option>-50</option>
+                                    </select>
+                                </div>
+
+                            <label for="min-power" class="col-sm-3 control-label">Minimum Power (dB)</label>
+                            <div class="col-sm-3">
+                               <select class="form-control" name="lpwr">
+                                     <option>0</option>
+                                     <option>-5</option>
+                                     <option>-10</option>
+                                     <option>-15</option>
+                                     <option>-20</option>
+                                     <option>-25</option>
+                                     <option>-30</option>
+                                     <option>-35</option>
+                                     <option>-40</option>
+                                     <option>-45</option>
+                                     <option>-50</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="step-power" class="col-sm-3 control-label">Step Power</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="ppwr">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="max-mode" class="col-sm-3 control-label">Maximum Mode</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="mmod">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+
+                            <label for="min-mode" class="col-sm-3 control-label">Minimum Mode</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="lmod">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="step-mode" class="col-sm-3 control-label">Step Mode</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" name="pmod">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="max-blocks" class="col-sm-3 control-label">Maximum Block</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="mbkn">
+                            </div>
+
+                            <label for="min-blocks" class="col-sm-3 control-label">Minimum Blocks</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="lbkn">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="step-blocks" class="col-sm-3 control-label">Step Block</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="pbkn">
+                            </div>
+                        </div>
+
+
+			<div class="form-group">
+			     <label for="step-blocks" class="col-sm-3 control-label">Sender Modem</label>
+			     <div class="col-sm-3">
+				<select class="form-control" name="modm">
+					<option>High Power 1</option>
+					<option>High Power 2</option>
+					<option>Low Power 1</option>
+					<option>Low Power 2</option>
+				</select>
+			     </div>
+
+			  <label for="step-blocks" class="col-sm-3 control-label">Receiver Modem</label>
+                             <div class="col-sm-3">
+                                <select class="form-control" name="modm">
+                                        <option>High Power 1</option>
+                                        <option>High Power 2</option>
+                                        <option>Low Power 1</option>
+                                        <option>Low Power 2</option>
+                                </select>
+                             </div>
+
+			</div>
+
+			
+			<div class="form-group">
+			     <label for="step-blocks" class="col-sm-3 control-label">Connection Type</label>
+			     <div class="col-sm-3">
+				<select class="form-control" name="type">
+					<option>P2P</option>
+					<option>P2MP</option>
+					<option>MESH</option>
+					<option>Multihop</option>
+				</select>
+			    </div>
+			</div> 
+
+                        <div class="form-group">
+                            <label for="num-reps" class="col-sm-3 control-label">Repetition</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="rptt">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filePath" class="col-sm-3 control-label">File</label>
+                            <div class="col-sm-3">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="200000" size =60><input name="filePath" type="file" size =60>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Your Email</label>
+                            <div class="col-sm-3">
+                                <input name='email' type='text' class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-5">    
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

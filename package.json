@@ -75,5 +75,8 @@
     "build": "gulp build",
     "prepublish": "npm run build",
     "coveralls": "gulp coveralls"
+  },
+  "dependencies": {
+    "ejs": "^2.5.6"
   }
 }

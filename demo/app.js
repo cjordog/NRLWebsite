@@ -4,6 +4,7 @@ var expressWs = require('express-ws')(app);
 var os = require('os');
 var pty = require('node-pty');
 
+
 var terminals = {},
     logs = {};
 
@@ -13,13 +14,74 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/terminal', function(req, res){
+  res.sendFile(__dirname + '/terminal.html');
+});
+
+app.get('/FAQ', function(req, res){
+  res.sendFile(__dirname + '/FAQ.html');
+});
+
+app.get('/register', function(req, res){
+  res.sendFile(__dirname + '/register.html');
+});
+
+app.get('/search', function(req, res){
+  res.sendFile(__dirname + '/search.html');
+});
+
+app.get('/publications', function(req, res){
+  res.sendFile(__dirname + '/publications.html');
+});
+
+app.get('/map', function(req, res){
+  res.sendFile(__dirname + '/map.html');
+});
+
+app.get('/searchwithmap', function(req, res){
+  res.sendFile(__dirname + '/searchwithmap.html');
+});
+
+
+
+
 app.get('/style.css', function(req, res){
   res.sendFile(__dirname + '/style.css');
+});
+
+app.get('/bootstrap.css', function(req, res){
+  res.sendFile(__dirname + '/stylesheets/bootstrap.min.css');
+});
+
+app.get('/bootstrap.js', function(req, res){
+  res.sendFile(__dirname + '/javascripts/bootstrap.min.js');
 });
 
 app.get('/main.js', function(req, res){
   res.sendFile(__dirname + '/main.js');
 });
+
+
+
+
+app.get('/img1', function(req, res){
+  res.sendFile(__dirname + '/images/IMG_1650.JPG');
+});
+
+app.get('/img2', function(req, res){
+  res.sendFile(__dirname + '/images/IMG_1664.JPG');
+});
+
+app.get('/img3', function(req, res){
+  res.sendFile(__dirname + '/images/IMG_1670.JPG');
+});
+
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.post('/terminals', function (req, res) {
   var cols = parseInt(req.query.cols),
