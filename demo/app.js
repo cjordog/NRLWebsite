@@ -4,6 +4,8 @@ var expressWs = require('express-ws')(app);
 var os = require('os');
 var pty = require('node-pty');
 var dotenv = require('dotenv');
+var session = require ('express-session');
+
 
 dotenv.load();
 
@@ -36,6 +38,41 @@ passport.deserializeUser(function(obj, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+//configure session
+app.use(session({
+  secret: 'testing12345',
+  resave: false,
+  saveUninitialized: false
+  /*store: sessionStore,*/
+  /*cookie: {
+    maxAge: 14 * 24 *60 * 60 * 1000,
+    httpOnly: true
+  }*/
+}));
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = req.session.error;
+  var msg = req.session.success;
+  delete req.session.error;
+  delete req.session.success;
+  res.locals.message = '';
+  if (err) res.locals.message = '<p class="msg error">' + err + '</p>';
+  if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
+  next();
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
 var terminals = {},
     logs = {};
 
@@ -46,7 +83,12 @@ app.get('/', function(req, res){
 });
 
 app.get('/terminal', function(req, res){
+  if(req.session.user){
     res.sendFile(__dirname + '/terminal.html');
+  }
+  else{
+    res.redirect('/login');
+  }
 });
 
 app.get('/FAQ', function(req, res){
@@ -172,8 +214,9 @@ app.get('/login',function(req, res){
 
 // Perform session logout and redirect to homepage
 app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+  req.session.destroy(function(){
+      res.redirect('/');
+    });
 });
 
 // Perform the final stage of authentication and redirect to '/user'
@@ -183,11 +226,18 @@ function(req, res) {
   if(!req.user){
     throw new Error('user null');
   }
+
+  req.session.user = req.user;
   res.redirect(/*req.session.returnTo ||*/ '/calendar');
 });
 
 app.get('/calendar', function(req, res, next) {
+  if(req.session.user){
     res.render(__dirname + '/calendar.pug');
+  }
+  else{
+    res.redirect('/login');
+  }
 });
 
 var port = process.env.PORT || 8000,
