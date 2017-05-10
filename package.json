@@ -77,6 +77,10 @@
     "coveralls": "gulp coveralls"
   },
   "dependencies": {
-    "ejs": "^2.5.6"
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.6",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.6.0",
+    "pug": "^2.0.0-rc.1"
   }
 }
