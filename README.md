@@ -1,7 +1,7 @@
 ## Installation
 Linux:
 
-  1. git clone https://github.com/cjordog/NRLWebsite
+  1. git clone https://github.com/cjordog/NRLWebsite;
      cd NRLWebsite
   2. ssh-keygen
   3. ssh-copy-id username@serverAddress
@@ -13,7 +13,7 @@ Linux:
 
 Mac:
 
-  1. git clone https://github.com/cjordog/NRLWebsite
+  1. git clone https://github.com/cjordog/NRLWebsite;
      cd NRLWebsite
   2. ssh-keygen
   3. cat ~/.ssh/id_rsa.pub | ssh user@machine "cat >> ~/.ssh/authorized_keys"
