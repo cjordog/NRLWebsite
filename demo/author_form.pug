@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='first_name') First Name:
+      input#first_name.form-control(type='text', placeholder='First name (Christian) last' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
+      label(for='family_name') Last Name:
+      input#family_name.form-control(type='text', placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
+    div.form-group
+      label(for='date_of_birth') Date of birth:
+      input(type="radio", name="date_of_birth", value="Monday", checked=date_of_birth=="monday")
+      | Monday
+      input(type="radio", name="date_of_birth", value="Tuesday", checked=date_of_birth=="tuesday")
+      | Tuesday
+      input(type="radio", name="date_of_birth", value="Wednesday", checked=date_of_birth=="wednesday")
+      | Wednesday
+      input(type="radio", name="date_of_birth", value="Thursday", checked=date_of_birth=="thursday")
+      | Thursday
+      input(type="radio", name="date_of_birth", value="Friday", checked=date_of_birth=="friday")
+      | Friday
+    div.form-group
+      label(for='time') Time:
+      input(type="radio", name="time", value="9:00", checked=time=="9:00")
+      | 9:00
+      input(type="radio", name="time", value="10:00", checked=time=="10:00")
+      | 10:00
+      input(type="radio", name="time", value="11:00", checked=time=="11:00")
+      | 11:00
+      input(type="radio", name="time", value="12:00", checked=time=="12:00")
+      | 12:00
+      input(type="radio", name="time", value="13:00", checked=time=="13:00")
+      | 13:00
+      input(type="radio", name="time", value="14:00", checked=time=="14:00")
+      | 14:00
+      input(type="radio", name="time", value="15:00", checked=time=="15:00")
+      | 15:00
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
