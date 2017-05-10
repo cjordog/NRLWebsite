@@ -3,7 +3,38 @@ var app = express();
 var expressWs = require('express-ws')(app);
 var os = require('os');
 var pty = require('node-pty');
+var dotenv = require('dotenv');
 
+dotenv.load();
+
+var passport = require('passport');
+var Auth0Strategy = require('passport-auth0');
+
+// Configure Passport to use Auth0
+var strategy = new Auth0Strategy({
+    domain:       process.env.AUTH0_DOMAIN,
+    clientID:     process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL:  process.env.AUTH0_CALLBACK_URL || 'http://localhost:8000/callback'
+  }, function(accessToken, refreshToken, extraParams, profile, done) {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+    return done(null, profile);
+  });
+
+passport.use(strategy);
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 var terminals = {},
     logs = {};
@@ -15,7 +46,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/terminal', function(req, res){
-  res.sendFile(__dirname + '/terminal.html');
+    res.sendFile(__dirname + '/terminal.html');
 });
 
 app.get('/FAQ', function(req, res){
@@ -43,8 +74,6 @@ app.get('/searchwithmap', function(req, res){
 });
 
 
-
-
 app.get('/style.css', function(req, res){
   res.sendFile(__dirname + '/style.css');
 });
@@ -60,8 +89,6 @@ app.get('/bootstrap.js', function(req, res){
 app.get('/main.js', function(req, res){
   res.sendFile(__dirname + '/main.js');
 });
-
-
 
 
 app.get('/img1', function(req, res){
@@ -139,7 +166,31 @@ app.ws('/terminals/:pid', function (ws, req) {
   });
 });
 
-var port = process.env.PORT || 3000,
+app.get('/login',function(req, res){
+    res.render(__dirname + '/login.pug', { env: process.env });
+});
+
+// Perform session logout and redirect to homepage
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+// Perform the final stage of authentication and redirect to '/user'
+app.get('/callback',
+passport.authenticate('auth0', { failureRedirect: '/url-if-something-fails' }),
+function(req, res) {
+  if(!req.user){
+    throw new Error('user null');
+  }
+  res.redirect(/*req.session.returnTo ||*/ '/calendar');
+});
+
+app.get('/calendar', function(req, res, next) {
+    res.render(__dirname + '/calendar.pug');
+});
+
+var port = process.env.PORT || 8000,
     host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
 
 console.log('App listening to http://' + host + ':' + port);
