@@ -7,6 +7,35 @@ var dotenv = require('dotenv');
 var session = require ('express-session');
 
 
+
+
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
+
+var Author = require(__dirname + '/reservation')
+var async = require('async')
+var reservation_controller = require(__dirname + '/reservationController');
+
+
+
+//Set up mongoose connection
+var mongoose = require('mongoose');
+var dev_db_url = 'mongodb://user:password@ds133311.mlab.com:33311/cs199website';
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator() ); // Add this after the bodyParser middleware!
+app.use(cookieParser());
+
 dotenv.load();
 
 var passport = require('passport');
@@ -91,6 +120,14 @@ app.get('/terminal', function(req, res){
   }
 });
 
+/*app.get('/catalog', function(req, res){
+    res.sendFile(__dirname + '/catalog.html');
+});*/
+
+app.get('/catalog', function(req, res){
+    res.render(__dirname + '/layout.pug');
+});
+
 app.get('/FAQ', function(req, res){
   res.sendFile(__dirname + '/FAQ.html');
 });
@@ -150,6 +187,47 @@ app.get('/img3', function(req, res){
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
+
+/*app.get('/reservations', function(req, res, next){
+  Author.find()
+    .sort([['family_name', 'ascending']])
+    .exec(function (err, list_authors) {
+      if (err) { return next(err); }
+      //Successful, so render
+      res.render('author_list', { title: 'Reservation List', author_list:  list_authors});
+    })
+});*/
+/*exports.reservation_list = function(req, res, next) {
+
+  Author.find()
+    .sort([['family_name', 'ascending']])
+    .exec(function (err, list_authors) {
+      if (err) { return next(err); }
+      //Successful, so render
+      res.render('author_list', { title: 'Reservation List', author_list:  list_authors});
+    })
+
+};*/
+
+app.get('/', reservation_controller.index);  
+
+/* GET request for creating Author. NOTE This must come before route for id (ie display author)*/
+app.get('/reservation/create', reservation_controller.reservation_create_get);
+
+/* POST request for creating Author. */
+app.post('/reservation/create', reservation_controller.reservation_create_post);
+
+/* GET request to delete Author. */
+app.get('/reservation/:id/delete', reservation_controller.reservation_delete_get);
+
+// POST request to delete Author
+app.post('/reservation/:id/delete', reservation_controller.reservation_delete_post);
+
+/* GET request for one Author. */
+app.get('/reservation/:id', reservation_controller.reservation_detail);
+
+/* GET request for list of all Authors. */
+app.get('/reservations', reservation_controller.reservation_list);
 
 
 app.post('/terminals', function (req, res) {

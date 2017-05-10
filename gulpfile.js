@@ -1,3 +1,5 @@
+"use strict";
+
 const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
 const coveralls = require('gulp-coveralls');
