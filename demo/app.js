@@ -125,7 +125,7 @@ app.get('/terminal', function(req, res){
 });*/
 
 app.get('/catalog', function(req, res){
-    res.render(__dirname + '/layout.pug');
+    res.render(__dirname + '/index.pug');
 });
 
 app.get('/FAQ', function(req, res){

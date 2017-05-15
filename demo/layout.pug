@@ -1,28 +1,48 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='styleshset', href='stylesheets/bootstrap.min.css')
+    title="NRL WaterCom Testbed"
+    link(rel='stylesheet', href='/bootstrap.css' type='text/css')
+    link(rel='styleshset', href='http://www.w3schools.com/lib/w3.css')
     script(src="https://cdn.auth0.com/js/lock/10.15/lock.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(src="/bootstrap.js")
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel="stylesheet", href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    //-link(rel="stylesheet", href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    //-script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    //-script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    //-link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    nav(class="navbar navbar-default")
+      div(class='container-fluid')
+        div(class="navbar-header")
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+            span(class="sr-only")="Toggle Navigation"
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+          a(class="navbar-brand" href="/")="UCLA NRL WaterCom Testbed"
+        div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+          ul(class="nav navbar-nav")
+            li(class="active")
+              a(href="/")="Home"
+                span(2class="sr-only")=(current)
+            li
+              a(href="/search")="Experiment"
+            li
+              a(href="/register")="Register"
+            li
+              a(href="/publications")="Publications"
+            li
+              a(href="/FAQ")="FAQ"
+            li
+              a(href="/terminal")="Terminal"
+            li
+              a(href="/catalog")="Catalog"
+
+
+
     div(class='container-fluid')
-      div(class='row')
-        div(class='col-sm-2')
-          block sidebar
-            ul(class='sidebar-nav')
-              li 
-                a(href='/') Home
-              li 
-                a(href='/reservations') All reservations
-              li 
-                a(href='/reservation/create') Create new reservation
-                
-        div(class='col-sm-10')
-          block content
+      block allcontent
