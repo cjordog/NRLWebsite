@@ -37,14 +37,14 @@ exports.reservation_detail = function(req, res, next) {
         if (err) { return next(err); }
         //Successful, so render
 
-        res.render(__dirname + '/author_detail.pug', { title: 'Author Detail', author: results.author } );
+        res.render(__dirname + '/author_detail.pug', { title: 'Reservation Detail', author: results.author } );
     });
 
 };
 
 // Display Author create form on GET
 exports.reservation_create_get = function(req, res, next) {
-    res.render(__dirname + '/author_form.pug', { title: 'Create Author'});
+    res.render(__dirname + '/author_form.pug', { title: 'Create Reservation'});
 };
 
 // Handle Author create on POST
@@ -77,7 +77,7 @@ exports.reservation_create_post = function(req, res, next) {
     console.log(author.time);
 
     if (errors) {
-        res.render(__dirname + '/author_form', { title: 'Create Author', author: author, errors: errors});
+        res.render(__dirname + '/author_form', { title: 'Create Reservation', author: author, errors: errors});
     return;
     //}else if(taken.isin(together)){
     }else {
@@ -108,7 +108,7 @@ exports.reservation_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render('author_delete', { title: 'Delete Author', author: results.author} );
+        res.render(__dirname + '/author_delete.pug', { title: 'Delete Author', author: results.author} );
     });
 
 };
@@ -127,7 +127,7 @@ exports.reservation_delete_post = function(req, res, next) {
         //Success
         if (results.authors_books>0) {
             //Author has books. Render in same way as for GET route.
-            res.render('author_delete', { title: 'Delete Author', author: results.author} );
+            res.render(__dirname + '/author_delete', { title: 'Delete Reservation', author: results.author} );
             return;
         }
         else {
