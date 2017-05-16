@@ -19,7 +19,7 @@ var expressValidator = require('express-validator');
 var Author = require(__dirname + '/reservation')
 var async = require('async')
 var reservation_controller = require(__dirname + '/reservationController');
-
+var user = null;
 
 
 //Set up mongoose connection
@@ -113,7 +113,8 @@ app.get('/', function(req, res){
 
 app.get('/terminal', function(req, res){
   if(req.session.user){
-    console.log(req.session.user);
+    console.log('Email: ' + req.session.user._json.email);
+    console.log('Verified: ' + req.session.user._json.email_verified);
     res.sendFile(__dirname + '/terminal.html');
   }
   else{
@@ -309,6 +310,7 @@ function(req, res) {
   }
 
   req.session.user = req.user;
+  user = req.user;
   res.redirect(/*req.session.returnTo ||*/ '/terminal');
 });
 

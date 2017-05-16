@@ -1,5 +1,12 @@
 var Author = require('./reservation')
 var async = require('async')
+var app_main_handler = require(__dirname + '/app');
+var user;
+if(app_main_handler.user!=null){
+    user = app_main_handler.user._json.email;
+}else{
+    user = 'None';
+}
 
 exports.index = function(req, res) {
 
@@ -8,7 +15,7 @@ exports.index = function(req, res) {
             Author.count(callback)
         },
     }, function(err, results) {
-        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results });
+        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results});
     });
 };
 
