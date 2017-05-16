@@ -113,6 +113,7 @@ app.get('/', function(req, res){
 
 app.get('/terminal', function(req, res){
   if(req.session.user){
+    console.log(req.session.user);
     res.sendFile(__dirname + '/terminal.html');
   }
   else{
@@ -124,9 +125,6 @@ app.get('/terminal', function(req, res){
     res.sendFile(__dirname + '/catalog.html');
 });*/
 
-app.get('/catalog', function(req, res){
-    res.render(__dirname + '/index.pug');
-});
 
 app.get('/FAQ', function(req, res){
   res.sendFile(__dirname + '/FAQ.html');
@@ -209,7 +207,12 @@ app.get('/img3', function(req, res){
 
 };*/
 
-app.get('/', reservation_controller.index);  
+
+/*app.get('/catalog', function(req, res){
+    res.render(__dirname + '/index.pug');
+});*/
+
+app.get('/catalog', reservation_controller.index);  
 
 /* GET request for creating Author. NOTE This must come before route for id (ie display author)*/
 app.get('/reservation/create', reservation_controller.reservation_create_get);
@@ -306,7 +309,7 @@ function(req, res) {
   }
 
   req.session.user = req.user;
-  res.redirect(/*req.session.returnTo ||*/ '/calendar');
+  res.redirect(/*req.session.returnTo ||*/ '/terminal');
 });
 
 app.get('/calendar', function(req, res, next) {

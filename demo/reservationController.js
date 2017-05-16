@@ -8,7 +8,7 @@ exports.index = function(req, res) {
             Author.count(callback)
         },
     }, function(err, results) {
-        res.render('index', { title: 'Local Library Home', error: err, data: results });
+        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results });
     });
 };
 
@@ -108,7 +108,7 @@ exports.reservation_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render(__dirname + '/author_delete.pug', { title: 'Delete Author', author: results.author} );
+        res.render(__dirname + '/author_delete.pug', { title: 'Delete Reservation', author: results.author} );
     });
 
 };

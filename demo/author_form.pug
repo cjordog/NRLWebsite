@@ -6,11 +6,11 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='first_name') First Name:
-      input#first_name.form-control(type='text', placeholder='First name (Christian) last' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
+      input#first_name.form-control(type='text', placeholder='First name (Christian)' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
       label(for='family_name') Last Name:
       input#family_name.form-control(type='text', placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
     div.form-group
-      label(for='date_of_birth') Date of birth:
+      label(for='date_of_birth') Day of Week:
       input(type="radio", name="date_of_birth", value="Monday", checked=date_of_birth=="monday")
       | Monday
       input(type="radio", name="date_of_birth", value="Tuesday", checked=date_of_birth=="tuesday")
