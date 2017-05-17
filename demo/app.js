@@ -115,7 +115,8 @@ app.get('/terminal', function(req, res){
   if(req.session.user){
     console.log('Email: ' + req.session.user._json.email);
     console.log('Verified: ' + req.session.user._json.email_verified);
-    res.sendFile(__dirname + '/terminal.html');
+    //res.sendFile(__dirname + '/terminal.html');
+    res.render(__dirname + '/terminal.pug', {username: req.session.user._json.email});
   }
   else{
     res.redirect('/login');

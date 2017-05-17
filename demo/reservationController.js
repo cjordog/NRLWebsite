@@ -15,7 +15,13 @@ exports.index = function(req, res) {
             Author.count(callback)
         },
     }, function(err, results) {
-        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results});
+        if(app_main_handler.user!=null){
+            user = app_main_handler.user._json.email;
+        }else{
+            user = 'No?';
+        }
+        console.log('Hello');
+        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results, username: user});
     });
 };
 
