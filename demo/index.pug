@@ -2,7 +2,10 @@ extends sidebar
 
 block content
 			h1= title
-			h2= username
+			if username
+				h2 admin
+			else
+				h2 none
 			p Welcome to the reservation system for experiment timeslots
 			h1 Dynamic content
 			if error
@@ -11,3 +14,6 @@ block content
 				p The database has the following record counts:
 				ul
 					li #[strong Reservations:] !{data.author_count}
+			if username
+				a(href='/requests')
+					button.btn.btn-primary View Requests

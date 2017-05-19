@@ -5,7 +5,7 @@ block content
   h1 #{title}: #{author.name}
   p= author.lifespan
   
-    p Do you really want to delete this reservation?
+    p Do you really want to delete this request?
     
     form(method='POST' action='')
       div.form-group
@@ -13,5 +13,5 @@ block content
 
       button.btn.btn-primary(type='submit') Delete
 
-    a(href='/reservations')
+    a(href='/requests')
       button.btn.btn-primary No

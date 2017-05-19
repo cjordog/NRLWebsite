@@ -4,11 +4,19 @@ block allcontent
 	div(class='row')
 		div(class='col-sm-2')
 			block sidebar
-				ul(class='sidebar-nav')
-					li 
-						a(href='/reservations') All reservations
-					li 
-						a(href='/reservation/create') Create new reservation
-
+				if username
+					ul(class='sidebar-nav')
+						li 
+							a(href='/reservations') All reservations
+						li 
+							a(href='/reservation/create') Create new reservation
+						li
+							a(href='/requests') All requests
+				else
+					ul(class='sidebar-nav')
+						li 
+							a(href='/reservations') All reservations
+						li 
+							a(href='/reservation/create') Create new reservation
 		div(class='col-sm-10')
 			block content

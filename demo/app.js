@@ -182,6 +182,10 @@ app.get('/img3', function(req, res){
   res.sendFile(__dirname + '/images/IMG_1670.JPG');
 });
 
+app.get('/error', function(req, res){
+  res.render(__dirname + '/error.pug');
+});
+
 // app.use(logger('dev'));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -214,7 +218,7 @@ app.get('/img3', function(req, res){
     res.render(__dirname + '/index.pug');
 });*/
 
-app.get('/catalog', reservation_controller.index);  
+app.get('/catalog', reservation_controller.index);
 
 /* GET request for creating Author. NOTE This must come before route for id (ie display author)*/
 app.get('/reservation/create', reservation_controller.reservation_create_get);
@@ -227,12 +231,17 @@ app.get('/reservation/:id/delete', reservation_controller.reservation_delete_get
 
 // POST request to delete Author
 app.post('/reservation/:id/delete', reservation_controller.reservation_delete_post);
+app.get('/request/:id/delete', reservation_controller.request_delete_get);
+app.post('/request/:id/delete', reservation_controller.request_delete_post);
+app.get('/request/:id/approve', reservation_controller.request_approve);
 
 /* GET request for one Author. */
 app.get('/reservation/:id', reservation_controller.reservation_detail);
+app.get('/request/:id', reservation_controller.request_detail);
 
 /* GET request for list of all Authors. */
 app.get('/reservations', reservation_controller.reservation_list);
+app.get('/requests', reservation_controller.request_list);
 
 
 app.post('/terminals', function (req, res) {
@@ -297,6 +306,7 @@ app.get('/login',function(req, res){
 
 // Perform session logout and redirect to homepage
 app.get('/logout', function(req, res){
+  exports.User = null;
   req.session.destroy(function(){
       res.redirect('/');
     });
@@ -312,6 +322,7 @@ function(req, res) {
 
   req.session.user = req.user;
   user = req.user;
+  exports.User = req.user;
   res.redirect(/*req.session.returnTo ||*/ '/terminal');
 });
 
@@ -323,6 +334,7 @@ app.get('/calendar', function(req, res, next) {
     res.redirect('/login');
   }
 });
+
 
 var port = process.env.PORT || 8000,
     host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
