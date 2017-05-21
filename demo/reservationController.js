@@ -9,7 +9,7 @@ finduser = function(){
     user = null;
     if(app_main_handler.User!=null){
         user = app_main_handler.User._json.email;
-        if(user=='martinckong24@gmail.com'){
+        if(user=='martinckong24@gmail.com' || user=='cjordog@gmail.com'){
             user = 'admin';
         }
     }
