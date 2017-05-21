@@ -111,8 +111,8 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/terminal', function(req, res){
-  if(req.session.user){
+app.get('/terminal_admin', function(req, res){
+  if(req.session.user && (req.session.user._json.email=='martinckong24@gmail.com' || req.session.user._json.email=='cjordog@gmail.com')){
     console.log('Email: ' + req.session.user._json.email);
     console.log('Verified: ' + req.session.user._json.email_verified);
     //res.sendFile(__dirname + '/terminal.html');
@@ -217,6 +217,8 @@ app.get('/error', function(req, res){
 /*app.get('/catalog', function(req, res){
     res.render(__dirname + '/index.pug');
 });*/
+
+app.get('/terminal', reservation_controller.terminal_time);
 
 app.get('/catalog', reservation_controller.index);
 

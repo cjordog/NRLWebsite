@@ -15,6 +15,7 @@ var time_db = mongoose.model('time', TimeSchema);
 var RequestSchema = Schema({
     first_name: {type: String, required: true, max: 100},
     family_name: {type: String, required: true, max: 100},
+    email: {type: String, required: true, max: 100},
     date_of_birth: { type: String },
     time: {type: String}
 });
@@ -48,6 +49,7 @@ var AuthorSchema = Schema(
     {
     first_name: {type: String, required: true, max: 100},
     family_name: {type: String, required: true, max: 100},
+    email: {type: String, required: true, max: 100},
     date_of_birth: { type: String },
     time: {type: String}
     }

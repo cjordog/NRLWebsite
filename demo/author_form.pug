@@ -9,6 +9,8 @@ block content
       input#first_name.form-control(type='text', placeholder='First name (Christian)' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
       label(for='family_name') Last Name:
       input#family_name.form-control(type='text', placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
+      label(for='email') Email:
+      input#email.form-control(type='text', placeholder='joe@gmail.com' name='email' required='true' value=(undefined===author ? '' : author.email))
     div.form-group
       label(for='date_of_birth') Day of Week:
       input(type="radio", name="date_of_birth", value="Monday", checked=date_of_birth=="monday")

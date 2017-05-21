@@ -33,6 +33,8 @@ exports.index = function(req, res) {
             }
         }*/
         user = finduser();
+        var date = new Date();
+        console.log(date.getUTCHours());
         res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results, username: user});
     });
 };
@@ -131,11 +133,13 @@ exports.reservation_create_post = function(req, res, next) {
     var author = new Item(
       { first_name: req.body.first_name,
         family_name: req.body.family_name,
+        email: req.body.email,
         date_of_birth: req.body.date_of_birth,
         time: req.body.time,
        });
     console.log(author.first_name);
     console.log(author.family_name);
+    console.log(author.email);
     console.log(author.date_of_birth);
     console.log(author.time);
 
@@ -287,6 +291,7 @@ exports.request_approve = function(req, res, next) {
         var author = new Author(
           { first_name: results.author.first_name,
             family_name: results.author.family_name,
+            email: results.author.email,
             date_of_birth: results.author.date_of_birth,
             time: results.author.time,
        });
@@ -304,6 +309,29 @@ exports.request_approve = function(req, res, next) {
         });
     });
   }
+};
+
+exports.terminal_time = function(req, res){
+    user = finduser();
+    if(user){
+        var email = app_main_handler.User._json.email;
+        console.log('Yay' + 'Email: ' + email);
+        console.log('Verified: ' + app_main_handler.User._json.email_verified);
+        var date = new Date();
+        var time = date.getUTCHours() - 7;
+        var timestring = time.toString() + ':00';
+        Author.count({date_of_birth:date.getUTCDay(), time: timestring, email: email}, function(err, count){
+            //console.log( "Number of docs: ", count );
+            realcount = count;
+            if(realcount<=0){
+                res.redirect('/catalog');
+            }else{
+                res.render(__dirname + '/terminal.pug', {username: email});
+            }
+        });
+    }else{
+        res.redirect('/login');
+    }
 };
 
 
