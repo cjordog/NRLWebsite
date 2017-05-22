@@ -51,13 +51,12 @@ exports.index = function(req, res) {
 
 // Display list of all Authors
 exports.reservation_list = function(req, res, next) {
-
   Author.find()
     .sort([['family_name', 'ascending']])
     .exec(function (err, list_authors) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors, username: finduser()});
+      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors, username: finduser(), message: findmessage()});
     })
 
 };
@@ -71,7 +70,7 @@ exports.request_list = function(req, res, next) {
       .exec(function (err, list_authors) {
         if (err) { return next(err); }
             //Successful, so render
-            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors, username: finduser()});
+            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors, username: finduser(), message: findmessage()});
         })
   }
 };
@@ -166,6 +165,11 @@ exports.reservation_create_post = function(req, res, next) {
                     if (err) { return next(err); }
                     //successful - redirect to new author record.
                         //res.redirect(author.url);
+                        if(Item==Author){
+                            message = "Reservation successfully created";
+                        }else{
+                            message = "Reservation request successfully created. Please wait for admin to approve your request.";
+                        }
                         res.redirect('/reservations');
                 });
             }else{
@@ -311,6 +315,7 @@ exports.request_approve = function(req, res, next) {
             if(realcount<=0){
                 author.save(function (err) {
                     if (err) { return next(err); }
+                        message = "Request successfully approved.";
                         res.redirect('/reservations');
                 });
             }else{
