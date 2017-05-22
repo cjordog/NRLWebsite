@@ -26,6 +26,25 @@ findmessage = function(){
     return retval;
 }
 
+getDate = function(date){
+    day = date.getUTCDay();
+    if(day==0){
+        return 'Sunday';
+    }else if(day==1){
+        return 'Monday';
+    }else if(day==2){
+        return 'Tuesday';
+    }else if(day==3){
+        return 'Wednesday';
+    }else if(day==4){
+        return 'Thursday';
+    }else if(day==5){
+        return 'Friday';
+    }else if(day==6){
+        return 'Saturday';
+    }
+}
+
 exports.index = function(req, res) {
 
     async.parallel({
@@ -335,7 +354,8 @@ exports.terminal_time = function(req, res){
         var date = new Date();
         var time = date.getUTCHours() - 7;
         var timestring = time.toString() + ':00';
-        Author.count({date_of_birth:date.getUTCDay(), time: timestring, email: email}, function(err, count){
+        var datestring = getDate(date);
+        Author.count({date_of_birth:datestring, time: timestring, email: email}, function(err, count){
             //console.log( "Number of docs: ", count );
             realcount = count;
             if(realcount<=0){
