@@ -6,17 +6,23 @@ block allcontent
 			block sidebar
 				if username
 					ul(class='sidebar-nav')
+						li
+							a(href='/catalog') Reservations Home
 						li 
 							a(href='/reservations') All reservations
 						li 
-							a(href='/reservation/create') Create new reservation
+							a(href='/reservation/create') Create reservation
 						li
 							a(href='/requests') All requests
+						li
+							a(href='/logout') Logout
 				else
 					ul(class='sidebar-nav')
+						li
+							a(href='/catalog') Reservations Home
 						li 
 							a(href='/reservations') All reservations
 						li 
-							a(href='/reservation/create') Create new reservation
+							a(href='/reservation/create') Request reservation
 		div(class='col-sm-10')
 			block content

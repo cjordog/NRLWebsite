@@ -1,11 +1,11 @@
 extends sidebar
 
 block content
+			if message
+				p= message
 			h1= title
 			if username
 				h2 admin
-			else
-				h2 none
 			p Welcome to the reservation system for experiment timeslots
 			h1 Dynamic content
 			if error

@@ -4,6 +4,7 @@ var Request = thing.Request;
 var async = require('async')
 var app_main_handler = require(__dirname + '/app');
 var user = null;
+var message = null;
 
 finduser = function(){
     user = null;
@@ -15,6 +16,15 @@ finduser = function(){
     }
     return user;
 };
+
+findmessage = function(){
+    var retval = null;
+    if(message!=null){
+        retval = message;
+        message = null;
+    }
+    return retval;
+}
 
 exports.index = function(req, res) {
 
@@ -35,7 +45,7 @@ exports.index = function(req, res) {
         user = finduser();
         var date = new Date();
         console.log(date.getUTCHours());
-        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results, username: user});
+        res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results, username: user, message: findmessage()});
     });
 };
 
@@ -47,7 +57,7 @@ exports.reservation_list = function(req, res, next) {
     .exec(function (err, list_authors) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors});
+      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors, username: finduser()});
     })
 
 };
@@ -61,7 +71,7 @@ exports.request_list = function(req, res, next) {
       .exec(function (err, list_authors) {
         if (err) { return next(err); }
             //Successful, so render
-            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors});
+            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors, username: finduser()});
         })
   }
 };
@@ -78,7 +88,7 @@ exports.reservation_detail = function(req, res, next) {
         if (err) { return next(err); }
         //Successful, so render
 
-        res.render(__dirname + '/author_detail.pug', { title: 'Reservation Detail', author: results.author } );
+        res.render(__dirname + '/author_detail.pug', { title: 'Reservation Detail', author: results.author, username: finduser() } );
     });
 
 };
@@ -96,14 +106,14 @@ exports.request_detail = function(req, res, next) {
         if (err) { return next(err); }
         //Successful, so render
 
-        res.render(__dirname + '/request_detail.pug', { title: 'Request Detail', author: results.author } );
+        res.render(__dirname + '/request_detail.pug', { title: 'Request Detail', author: results.author, username: finduser() } );
     });
   }
 };
 
 // Display Author create form on GET
 exports.reservation_create_get = function(req, res, next) {
-    res.render(__dirname + '/author_form.pug', { title: 'Create Reservation Request'});
+    res.render(__dirname + '/author_form.pug', { title: 'Create Reservation Request', username: finduser()});
 };
 
 // Handle Author create on POST
@@ -144,7 +154,7 @@ exports.reservation_create_post = function(req, res, next) {
     console.log(author.time);
 
     if (errors) {
-        res.render(__dirname + '/author_form', { title: 'Create Reservation', author: author, errors: errors});
+        res.render(__dirname + '/author_form', { title: 'Create Reservation', author: author, errors: errors, username: finduser()});
     return;
     //}else if(taken.isin(together)){
     }else {
@@ -159,7 +169,7 @@ exports.reservation_create_post = function(req, res, next) {
                         res.redirect('/reservations');
                 });
             }else{
-                res.render(__dirname + '/author_form.pug', { title: 'Reservation already taken', author: author});
+                res.render(__dirname + '/author_form.pug', { title: 'Reservation already taken', author: author, username: finduser()});
             }
         });
     }
@@ -176,7 +186,7 @@ exports.reservation_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render(__dirname + '/author_delete.pug', { title: 'Delete Reservation', author: results.author} );
+        res.render(__dirname + '/author_delete.pug', { title: 'Delete Reservation', author: results.author, username: finduser()} );
     });
 
 };
@@ -195,7 +205,7 @@ exports.reservation_delete_post = function(req, res, next) {
         //Success
         if (results.authors_books>0) {
             //Author has books. Render in same way as for GET route.
-            res.render(__dirname + '/author_delete', { title: 'Delete Reservation', author: results.author} );
+            res.render(__dirname + '/author_delete', { title: 'Delete Reservation', author: results.author, username: finduser()} );
             return;
         }
         else {
@@ -234,7 +244,7 @@ exports.request_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render(__dirname + '/request_delete.pug', { title: 'Delete Request', author: results.author} );
+        res.render(__dirname + '/request_delete.pug', { title: 'Delete Request', author: results.author, username: finduser()} );
     });
   }
 };
@@ -255,7 +265,7 @@ exports.request_delete_post = function(req, res, next) {
         //Success
         if (results.authors_books>0) {
             //Author has books. Render in same way as for GET route.
-            res.render(__dirname + '/request_delete', { title: 'Delete Request', author: results.author} );
+            res.render(__dirname + '/request_delete', { title: 'Delete Request', author: results.author, username: finduser()} );
             return;
         }
         else {
@@ -304,7 +314,7 @@ exports.request_approve = function(req, res, next) {
                         res.redirect('/reservations');
                 });
             }else{
-                res.render(__dirname + '/request_detail.pug', { title: 'Reservation already taken', author: results.author});
+                res.render(__dirname + '/request_detail.pug', { title: 'Reservation already taken', author: results.author, username: finduser()});
             }
         });
     });
@@ -324,6 +334,7 @@ exports.terminal_time = function(req, res){
             //console.log( "Number of docs: ", count );
             realcount = count;
             if(realcount<=0){
+                message = 'No reservation for ' + email + ' at the current time';
                 res.redirect('/catalog');
             }else{
                 res.render(__dirname + '/terminal.pug', {username: email});
