@@ -12,6 +12,8 @@ finduser = function(){
         user = app_main_handler.User._json.email;
         if(user=='martinckong24@gmail.com' || user=='cjordog@gmail.com'){
             user = 'admin';
+        }else{
+            user = null;
         }
     }
     return user;
@@ -62,6 +64,9 @@ exports.index = function(req, res) {
             }
         }*/
         user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
         var date = new Date();
         console.log(date.getUTCHours());
         res.render(__dirname + '/index.pug', { title: 'Reservation Home', error: err, data: results, username: user, message: findmessage()});
@@ -75,7 +80,11 @@ exports.reservation_list = function(req, res, next) {
     .exec(function (err, list_authors) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors, username: finduser(), message: findmessage()});
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+      res.render(__dirname + '/author_list.pug', { title: 'Reservation List', author_list:  list_authors, username: user, message: findmessage()});
     })
 
 };
@@ -89,7 +98,11 @@ exports.request_list = function(req, res, next) {
       .exec(function (err, list_authors) {
         if (err) { return next(err); }
             //Successful, so render
-            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors, username: finduser(), message: findmessage()});
+            user = finduser();
+            if(user!='admin'){
+                user = null;
+            }
+            res.render(__dirname + '/author_list.pug', { title: 'Request List', author_list:  list_authors, username: user, message: findmessage()});
         })
   }
 };
@@ -105,8 +118,11 @@ exports.reservation_detail = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-
-        res.render(__dirname + '/author_detail.pug', { title: 'Reservation Detail', author: results.author, username: finduser() } );
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+        res.render(__dirname + '/author_detail.pug', { title: 'Reservation Detail', author: results.author, username: user } );
     });
 
 };
@@ -123,15 +139,22 @@ exports.request_detail = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-
-        res.render(__dirname + '/request_detail.pug', { title: 'Request Detail', author: results.author, username: finduser() } );
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+        res.render(__dirname + '/request_detail.pug', { title: 'Request Detail', author: results.author, username: user } );
     });
   }
 };
 
 // Display Author create form on GET
 exports.reservation_create_get = function(req, res, next) {
-    res.render(__dirname + '/author_form.pug', { title: 'Create Reservation Request', username: finduser()});
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+    res.render(__dirname + '/author_form.pug', { title: 'Create Reservation Request', username: user});
 };
 
 // Handle Author create on POST
@@ -171,8 +194,12 @@ exports.reservation_create_post = function(req, res, next) {
     console.log(author.date_of_birth);
     console.log(author.time);
 
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
     if (errors) {
-        res.render(__dirname + '/author_form', { title: 'Create Reservation', author: author, errors: errors, username: finduser()});
+        res.render(__dirname + '/author_form', { title: 'Create Reservation', author: author, errors: errors, username: user});
     return;
     //}else if(taken.isin(together)){
     }else {
@@ -192,7 +219,7 @@ exports.reservation_create_post = function(req, res, next) {
                         res.redirect('/reservations');
                 });
             }else{
-                res.render(__dirname + '/author_form.pug', { title: 'Reservation already taken', author: author, username: finduser()});
+                res.render(__dirname + '/author_form.pug', { title: 'Reservation already taken', author: author, username: user});
             }
         });
     }
@@ -209,7 +236,11 @@ exports.reservation_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render(__dirname + '/author_delete.pug', { title: 'Delete Reservation', author: results.author, username: finduser()} );
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+        res.render(__dirname + '/author_delete.pug', { title: 'Delete Reservation', author: results.author, username: user} );
     });
 
 };
@@ -228,7 +259,11 @@ exports.reservation_delete_post = function(req, res, next) {
         //Success
         if (results.authors_books>0) {
             //Author has books. Render in same way as for GET route.
-            res.render(__dirname + '/author_delete', { title: 'Delete Reservation', author: results.author, username: finduser()} );
+            user = finduser();
+            if(user!='admin'){
+                user = null;
+            }
+            res.render(__dirname + '/author_delete', { title: 'Delete Reservation', author: results.author, username: user} );
             return;
         }
         else {
@@ -267,7 +302,11 @@ exports.request_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render(__dirname + '/request_delete.pug', { title: 'Delete Request', author: results.author, username: finduser()} );
+        user = finduser();
+        if(user!='admin'){
+            user = null;
+        }
+        res.render(__dirname + '/request_delete.pug', { title: 'Delete Request', author: results.author, username: user} );
     });
   }
 };
@@ -288,7 +327,11 @@ exports.request_delete_post = function(req, res, next) {
         //Success
         if (results.authors_books>0) {
             //Author has books. Render in same way as for GET route.
-            res.render(__dirname + '/request_delete', { title: 'Delete Request', author: results.author, username: finduser()} );
+            user = finduser();
+            if(user!='admin'){
+                user = null;
+            }
+            res.render(__dirname + '/request_delete', { title: 'Delete Request', author: results.author, username: user} );
             return;
         }
         else {
@@ -338,7 +381,11 @@ exports.request_approve = function(req, res, next) {
                         res.redirect('/reservations');
                 });
             }else{
-                res.render(__dirname + '/request_detail.pug', { title: 'Reservation already taken', author: results.author, username: finduser()});
+                user = finduser();
+                if(user!='admin'){
+                    user = null;
+                }
+                res.render(__dirname + '/request_detail.pug', { title: 'Reservation already taken', author: results.author, username: user});
             }
         });
     });
@@ -346,8 +393,7 @@ exports.request_approve = function(req, res, next) {
 };
 
 exports.terminal_time = function(req, res){
-    user = finduser();
-    if(user){
+    if(app_main_handler.User){
         var email = app_main_handler.User._json.email;
         console.log('Yay' + 'Email: ' + email);
         console.log('Verified: ' + app_main_handler.User._json.email_verified);
