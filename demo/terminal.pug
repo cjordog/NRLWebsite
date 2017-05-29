@@ -3,12 +3,14 @@ extends layout
 block allcontent
 	link(rel='stylesheet' href='/build/xterm.css')
 	link(rel='stylesheet' href='/build/addons/fullscreen/fullscreen.css')
-	link(rel='stylesheet' href='style.css')
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js')
 	script(src='/build/xterm.js')
 	script(src='/build/addons/attach/attach.js')
 	script(src='/build/addons/fit/fit.js')
 	script(src='/build/addons/fullscreen/fullscreen.js')
+	link(rel='stylesheet' href='style.css')
+	link(rel='stylesheet' href='/bootstrap.css' type='text/css')
+	link(rel='stylesheet' href="http://www.w3schools.com/lib/w3.css" type='text/css')
 	div(class='row')
 		div(class='col-sm-2')
 			block sidebar

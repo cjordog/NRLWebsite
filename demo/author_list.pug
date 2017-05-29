@@ -7,9 +7,18 @@ block content
   
   ul
   each author in author_list
-    li 
-      a(href=author.url) #{author.name} 
-      | (#{author.lifespan})
+    if (title=='Request List')
+      li 
+        a(href=author.url) #{author.name} 
+        | (#{author.lifespan})
+        |  #{author.status}
+    else
+      li 
+        a(href=author.url) #{author.name} 
+        | (#{author.lifespan})
 
   else
-    li There are no authors.
+    if (username=='user')
+      li There are no requests with your email
+    else
+      li There are none available.

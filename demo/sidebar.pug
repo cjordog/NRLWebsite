@@ -2,9 +2,9 @@ extends layout
 
 block allcontent
 	div(class='row')
-		div(class='col-sm-2')
+		div(class='col-sm-3')
 			block sidebar
-				if username
+				if (username=='admin')
 					ul(class='sidebar-nav')
 						li
 							a(href='/catalog') Reservations Home
@@ -16,6 +16,18 @@ block allcontent
 							a(href='/requests') All requests
 						li
 							a(href='/logout') Logout
+				else if (username=='user')
+					ul(class='sidebar-nav')
+						li
+							a(href='/catalog') Reservations Home
+						li 
+							a(href='/reservations') All reservations
+						li 
+							a(href='/reservation/create') Request reservation
+						li 
+							a(href='/my_requests') My requests
+						li
+							a(href='/logout') Logout
 				else
 					ul(class='sidebar-nav')
 						li
@@ -24,5 +36,5 @@ block allcontent
 							a(href='/reservations') All reservations
 						li 
 							a(href='/reservation/create') Request reservation
-		div(class='col-sm-10')
+		div(class='col-sm-9')
 			block content
