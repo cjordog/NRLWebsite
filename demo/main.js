@@ -97,6 +97,7 @@ function createTerminal() {
 function runRealTerminal() {
   term.attach(socket);
   term._initialized = true;
+  addCustomListeners();
 }
 
 function runFakeTerminal() {
@@ -138,4 +139,14 @@ function runFakeTerminal() {
   term.on('paste', function (data, ev) {
     term.write(data);
   });
+}
+
+function addCustomListeners(){
+  var li_elem=document.getElementById('ctrl_bs_c')
+  console.log(li_elem);
+  li_elem.addEventListener("click", ctrl_bs_c);
+}
+
+ctrl_bs_c = function(){
+  term._sendData(String.fromCharCode(28,99));
 }

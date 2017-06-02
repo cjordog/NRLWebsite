@@ -1,1 +1,1 @@
-exec ssh -t pi@141.219.123.118 "bash; \ clear"; \
+exec ssh -t 166.144.173.191:22 "bash; \ clear"; \
