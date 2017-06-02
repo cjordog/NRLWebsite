@@ -17,7 +17,8 @@ var RequestSchema = Schema({
     family_name: {type: String, required: true, max: 100},
     email: {type: String, required: true, max: 100},
     date_of_birth: { type: String },
-    time: {type: String}
+    time: {type: String},
+    status: {type: String}
 });
 
 RequestSchema
@@ -51,7 +52,8 @@ var AuthorSchema = Schema(
     family_name: {type: String, required: true, max: 100},
     email: {type: String, required: true, max: 100},
     date_of_birth: { type: String },
-    time: {type: String}
+    time: {type: String},
+    status: {type: String}
     }
   );
 

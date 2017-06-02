@@ -244,6 +244,7 @@ app.get('/request/:id', reservation_controller.request_detail);
 /* GET request for list of all Authors. */
 app.get('/reservations', reservation_controller.reservation_list);
 app.get('/requests', reservation_controller.request_list);
+app.get('/my_requests', reservation_controller.my_request_list);
 
 
 app.post('/terminals', function (req, res) {

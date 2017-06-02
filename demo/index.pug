@@ -4,7 +4,7 @@ block content
 			if message
 				p= message
 			h1= title
-			if username
+			if (username=='admin')
 				h2 admin
 			p Welcome to the reservation system for experiment timeslots
 			h1 Dynamic content
@@ -14,7 +14,7 @@ block content
 				p The database has the following record counts:
 				ul
 					li #[strong Reservations:] !{data.author_count}
-			if username
+			if (username=='admin')
 				a(href='/requests')
 					button.btn.btn-primary View Requests
 				a(href='/terminal_admin')
