@@ -9,7 +9,9 @@ Linux:
   5. sudo apt-get install node
   6. sudo apt-get install npm
   7. npm install
-  8. npm start
+  8. screen
+  9. npm start
+  10. ctrl-A, ctrl-D
 
 Mac:
 
