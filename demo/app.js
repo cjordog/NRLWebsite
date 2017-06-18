@@ -339,8 +339,8 @@ app.get('/calendar', function(req, res, next) {
 });
 
 
-var port = process.env.PORT || 8000,
-    host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
-
+var port = process.env.PORT || 80,
+//    host = os.platform() === 'win32' ? '127.0.0.1' : '0.0.0.0';
+    host = 'apus.cs.ucla.edu';
 console.log('App listening to http://' + host + ':' + port);
 app.listen(port, host);
